@@ -1,16 +1,68 @@
-# React + Vite
+# ReadyLog / Note ReadyRoom
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ReadyLog adalah aplikasi internal untuk membantu pencatatan operasional ReadyRoom.  
+Aplikasi ini dibuat sebagai pengganti catatan manual seperti WPS/Excel agar data cabang, table operasional, dan laporan internal lebih rapi, cepat dicari, dan mudah dicetak.
 
-Currently, two official plugins are available:
+## Tujuan
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+ReadyLog digunakan untuk mencatat kebutuhan internal seperti:
 
-## React Compiler
+- Booking manual
+- Operasional cabang
+- PLN / token listrik
+- Maintenance kamar
+- Kas kecil
+- Catatan tambahan cabang
+- Laporan internal yang bisa dicetak ke PDF
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Fitur Saat Ini
 
-## Expanding the ESLint configuration
+- Tambah cabang
+- Tambah table berdasarkan cabang
+- Tambah data ke dalam table
+- Edit data langsung di table
+- Filter / pencarian data
+- Pilih data tertentu
+- Cetak PDF detail
+- Summary total data
+- Summary Cash, QRIS, dan TF
+- Penyimpanan sementara menggunakan localStorage browser
+- UI NeoBrutalism full color
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Catatan Penyimpanan Data
+
+Untuk versi awal, data masih disimpan menggunakan `localStorage`.
+
+Artinya:
+
+- Data tersimpan di browser/perangkat yang sama
+- Data belum tersinkron antar device
+- Jika browser dibersihkan, data bisa hilang
+- Untuk penggunaan operasional banyak user, aplikasi perlu disambungkan ke backend/database
+
+## Rencana Pengembangan
+
+- Login user dan role akses
+- Backend database
+- Sinkron data antar device
+- Upload foto bukti
+- Upload lampiran PDF
+- Export PDF dengan lampiran gambar besar
+- Riwayat edit data
+- Hak akses karyawan, pengawas, dan boss
+- Integrasi dengan sistem booking ReadyRoom
+
+## Tech Stack
+
+- React
+- Vite
+- JavaScript
+- CSS
+- localStorage
+
+## Cara Menjalankan Project
+
+Install dependency:
+
+```bash
+npm install
