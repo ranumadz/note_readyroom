@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./App.css";
 import BookingBoard from "./pages/admin/booking-board/BookingBoard";
 
 export default function App() {
@@ -21,7 +22,7 @@ export default function App() {
 
 function ReadyRoomLoader() {
   return (
-    <div style={loaderPage}>
+    <div className="readyroom-loader-page" style={loaderPage}>
       <style>
         {`
           @keyframes readyroom-spin {
@@ -43,19 +44,117 @@ function ReadyRoomLoader() {
               opacity: 1;
             }
           }
+
+          @media (max-width: 900px) {
+            .readyroom-loader-page {
+              padding: 20px !important;
+            }
+
+            .readyroom-loader-panel {
+              width: 100% !important;
+              min-height: auto !important;
+              grid-template-columns: 1fr !important;
+              border-radius: 28px !important;
+              box-shadow: 8px 8px 0 #111827 !important;
+            }
+
+            .readyroom-loader-visual {
+              min-height: 300px !important;
+              border-right: none !important;
+              border-bottom: 3px solid #111827 !important;
+              padding: 34px 22px !important;
+            }
+
+            .readyroom-loader-content {
+              align-items: center !important;
+              text-align: center !important;
+              padding: 34px 22px 38px !important;
+            }
+
+            .readyroom-spinner-ring {
+              width: 160px !important;
+              height: 160px !important;
+              border-width: 7px !important;
+              box-shadow: 6px 6px 0 #111827 !important;
+            }
+
+            .readyroom-spinner-r {
+              width: 92px !important;
+              height: 92px !important;
+              font-size: 44px !important;
+              border-radius: 22px !important;
+              box-shadow: 5px 5px 0 #111827 !important;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .readyroom-loader-page {
+              padding: 14px !important;
+              align-items: center !important;
+            }
+
+            .readyroom-loader-panel {
+              border-radius: 24px !important;
+              box-shadow: 6px 6px 0 #111827 !important;
+            }
+
+            .readyroom-loader-visual {
+              min-height: 250px !important;
+              padding: 28px 18px !important;
+            }
+
+            .readyroom-loader-content {
+              padding: 28px 18px 32px !important;
+            }
+
+            .readyroom-spinner-ring {
+              width: 132px !important;
+              height: 132px !important;
+              border-width: 6px !important;
+            }
+
+            .readyroom-spinner-r {
+              width: 76px !important;
+              height: 76px !important;
+              font-size: 36px !important;
+              border-radius: 18px !important;
+            }
+
+            .readyroom-brand-title {
+              font-size: 42px !important;
+              letter-spacing: -0.06em !important;
+            }
+
+            .readyroom-brand-subtitle {
+              font-size: 14px !important;
+            }
+          }
         `}
       </style>
 
-      <div style={loaderPanel}>
-        <div style={loaderTop}>
-          <div style={spinnerRing}>
-            <div style={spinnerR}>R</div>
+      <div className="readyroom-loader-panel" style={loaderPanel}>
+        <div className="readyroom-loader-visual" style={loaderTop}>
+          <div className="readyroom-spinner-ring" style={spinnerRing}>
+            <div className="readyroom-spinner-r" style={spinnerR}>
+              R
+            </div>
           </div>
         </div>
 
-        <div style={loaderContent}>
-          <h1 style={brandTitle}>ReadyRoom</h1>
-          <p style={brandSubtitle}>Loading workspace...</p>
+        <div className="readyroom-loader-content" style={loaderContent}>
+          <div style={eyebrow}>READYROOM INTERNAL</div>
+
+          <h1 className="readyroom-brand-title" style={brandTitle}>
+            ReadyRoom
+          </h1>
+
+          <p className="readyroom-brand-subtitle" style={brandSubtitle}>
+            Loading workspace...
+          </p>
+
+          <div style={progressWrap}>
+            <div style={progressBar} />
+          </div>
 
           <div style={dotsRow}>
             <span style={{ ...dot, animationDelay: "0s" }} />
@@ -70,24 +169,26 @@ function ReadyRoomLoader() {
 
 const loaderPage = {
   minHeight: "100vh",
-  width: "100%",
+  width: "100vw",
+  minWidth: "100vw",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   padding: "28px",
   background:
-    "linear-gradient(135deg, #F7F3EA 0%, #FFF5E8 45%, #FDECEC 100%)",
+    "radial-gradient(circle at top left, rgba(239,35,60,0.14), transparent 32%), linear-gradient(135deg, #F7F3EA 0%, #FFF5E8 45%, #FDECEC 100%)",
+  overflow: "hidden",
 };
 
 const loaderPanel = {
-  width: "min(1100px, 100%)",
+  width: "min(1120px, 100%)",
   minHeight: "min(78vh, 760px)",
   background: "#FFFFFF",
   border: "3px solid #111827",
   borderRadius: "36px",
   boxShadow: "12px 12px 0 #111827",
   display: "grid",
-  gridTemplateColumns: "1.1fr 1fr",
+  gridTemplateColumns: "1.12fr 1fr",
   overflow: "hidden",
 };
 
@@ -99,6 +200,7 @@ const loaderTop = {
   alignItems: "center",
   justifyContent: "center",
   padding: "40px",
+  minHeight: "100%",
 };
 
 const spinnerRing = {
@@ -137,24 +239,58 @@ const loaderContent = {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "flex-start",
-  padding: "48px",
+  padding: "52px",
+};
+
+const eyebrow = {
+  display: "inline-flex",
+  alignItems: "center",
+  width: "fit-content",
+  padding: "8px 12px",
+  marginBottom: "18px",
+  border: "2px solid #111827",
+  borderRadius: "999px",
+  background: "#FFB703",
+  color: "#111827",
+  fontSize: "12px",
+  fontWeight: 950,
+  letterSpacing: "0.08em",
+  boxShadow: "4px 4px 0 #111827",
 };
 
 const brandTitle = {
   margin: 0,
-  fontSize: "clamp(42px, 6vw, 74px)",
-  lineHeight: 1,
+  fontSize: "clamp(46px, 6vw, 78px)",
+  lineHeight: 0.96,
   fontWeight: 950,
-  letterSpacing: "-0.07em",
+  letterSpacing: "-0.075em",
   color: "#111827",
 };
 
 const brandSubtitle = {
-  marginTop: "14px",
+  marginTop: "16px",
   marginBottom: 0,
   fontSize: "clamp(15px, 2vw, 20px)",
   fontWeight: 800,
   color: "#475569",
+};
+
+const progressWrap = {
+  width: "min(340px, 100%)",
+  height: "16px",
+  marginTop: "26px",
+  border: "2px solid #111827",
+  borderRadius: "999px",
+  background: "#FFFFFF",
+  overflow: "hidden",
+  boxShadow: "4px 4px 0 #111827",
+};
+
+const progressBar = {
+  width: "68%",
+  height: "100%",
+  background: "#EF233C",
+  borderRight: "2px solid #111827",
 };
 
 const dotsRow = {
