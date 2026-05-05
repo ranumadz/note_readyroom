@@ -238,7 +238,11 @@ function getFieldWidth(field) {
 
 function getTableMinWidth(fields) {
   const baseColumns = 150;
-  const fieldsWidth = fields.reduce((sum, field) => sum + getFieldWidth(field), 0);
+  const fieldsWidth = fields.reduce(
+    (sum, field) => sum + getFieldWidth(field),
+    0
+  );
+
   return Math.max(1280, baseColumns + fieldsWidth);
 }
 
@@ -283,6 +287,7 @@ export default function BookingBoard() {
 
   const selectedBranchData = useMemo(() => {
     if (selectedBranch === "all") return null;
+
     return workspace.branches.find(
       (branch) => Number(branch.id) === Number(selectedBranch)
     );
@@ -290,6 +295,7 @@ export default function BookingBoard() {
 
   const branchTables = useMemo(() => {
     if (selectedBranch === "all") return [];
+
     return workspace.tables.filter(
       (table) => Number(table.branchId) === Number(selectedBranch)
     );
@@ -329,7 +335,11 @@ export default function BookingBoard() {
 
   const selectedData = visibleRows.filter((row) => selectedRows.includes(row.id));
 
-  const totalNominal = visibleRows.reduce((sum, row) => sum + getNominal(row), 0);
+  const totalNominal = visibleRows.reduce(
+    (sum, row) => sum + getNominal(row),
+    0
+  );
+
   const totalCash = visibleRows.filter((row) => row.payment === "cash").length;
   const totalQris = visibleRows.filter((row) => row.payment === "qris").length;
   const totalTf = visibleRows.filter((row) => row.payment === "tf").length;
@@ -669,17 +679,23 @@ export default function BookingBoard() {
 
               <div class="box">
                 <div class="label">Cash</div>
-                <div class="value">${cashRows.length} data<br/>Rp ${money(cashTotal)}</div>
+                <div class="value">${cashRows.length} data<br/>Rp ${money(
+      cashTotal
+    )}</div>
               </div>
 
               <div class="box">
                 <div class="label">QRIS</div>
-                <div class="value">${qrisRows.length} data<br/>Rp ${money(qrisTotal)}</div>
+                <div class="value">${qrisRows.length} data<br/>Rp ${money(
+      qrisTotal
+    )}</div>
               </div>
 
               <div class="box">
                 <div class="label">TF</div>
-                <div class="value">${tfRows.length} data<br/>Rp ${money(tfTotal)}</div>
+                <div class="value">${tfRows.length} data<br/>Rp ${money(
+      tfTotal
+    )}</div>
               </div>
 
               <div class="box">
@@ -758,34 +774,231 @@ export default function BookingBoard() {
             box-shadow: 2px 2px 0 ${c.ink} !important;
           }
 
+          .readylog-mobile-list {
+            display: none;
+          }
+
+          .readylog-chip-row {
+            scrollbar-width: thin;
+          }
+
+          .readylog-chip-row::-webkit-scrollbar {
+            height: 6px;
+          }
+
+          .readylog-chip-row::-webkit-scrollbar-thumb {
+            background: ${c.ink};
+            border-radius: 999px;
+          }
+
           @media (max-width: 900px) {
+            .readylog-container {
+              padding: 14px !important;
+            }
+
+            .readylog-panel {
+              border-radius: 16px !important;
+              box-shadow: 5px 5px 0 ${c.ink} !important;
+            }
+
+            .readylog-header-inner {
+              align-items: stretch !important;
+            }
+
+            .readylog-brand-row {
+              width: 100% !important;
+              align-items: flex-start !important;
+            }
+
+            .readylog-title {
+              font-size: 26px !important;
+            }
+
+            .readylog-subtitle {
+              font-size: 12px !important;
+              line-height: 1.45 !important;
+            }
+
+            .readylog-actions {
+              width: 100% !important;
+              display: grid !important;
+              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+              gap: 10px !important;
+            }
+
+            .readylog-actions button {
+              width: 100% !important;
+              justify-content: center !important;
+            }
+
+            .readylog-chip-row {
+              flex-wrap: nowrap !important;
+              overflow-x: auto !important;
+              padding-bottom: 8px !important;
+              margin-right: -6px !important;
+              -webkit-overflow-scrolling: touch !important;
+            }
+
+            .readylog-chip-row button {
+              flex: 0 0 auto !important;
+            }
+
             .readylog-filter {
-              grid-template-columns: 1fr !important;
+              grid-template-columns: 1fr 1fr !important;
+            }
+
+            .readylog-filter input {
+              grid-column: 1 / -1 !important;
+            }
+
+            .readylog-filter button {
+              width: 100% !important;
             }
 
             .readylog-form-grid {
               grid-template-columns: 1fr !important;
             }
+
+            .readylog-summary {
+              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+
+            .readylog-modal-box {
+              max-width: calc(100vw - 28px) !important;
+              padding: 14px !important;
+              border-radius: 18px !important;
+              box-shadow: 6px 6px 0 ${c.ink} !important;
+            }
+          }
+
+          @media (max-width: 760px) {
+            .readylog-desktop-table {
+              display: none !important;
+            }
+
+            .readylog-mobile-list {
+              display: grid !important;
+              gap: 12px !important;
+              margin-top: 16px !important;
+            }
+
+            .readylog-mobile-card {
+              background: ${c.panel};
+              border: 2px solid ${c.ink};
+              border-radius: 16px;
+              box-shadow: 5px 5px 0 ${c.ink};
+              padding: 14px;
+            }
+
+            .readylog-mobile-card-head {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 10px;
+              margin-bottom: 12px;
+              padding-bottom: 10px;
+              border-bottom: 2px solid ${c.ink};
+            }
+
+            .readylog-mobile-number {
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              min-width: 34px;
+              height: 34px;
+              border: 2px solid ${c.ink};
+              border-radius: 999px;
+              background: #FFB703;
+              color: #111827;
+              font-weight: 950;
+              box-shadow: 3px 3px 0 ${c.ink};
+            }
+
+            .readylog-mobile-fields {
+              display: grid;
+              grid-template-columns: 1fr;
+              gap: 10px;
+            }
+
+            .readylog-mobile-field-label {
+              display: block;
+              font-size: 11px;
+              font-weight: 950;
+              color: ${c.sub};
+              text-transform: uppercase;
+              margin-bottom: 5px;
+              letter-spacing: 0.04em;
+            }
+          }
+
+          @media (max-width: 520px) {
+            .readylog-container {
+              padding: 10px !important;
+            }
+
+            .readylog-title {
+              font-size: 24px !important;
+            }
+
+            .readylog-logo {
+              width: 46px !important;
+              height: 46px !important;
+              font-size: 16px !important;
+            }
+
+            .readylog-actions {
+              grid-template-columns: 1fr !important;
+            }
+
+            .readylog-filter {
+              grid-template-columns: 1fr !important;
+            }
+
+            .readylog-summary {
+              grid-template-columns: 1fr !important;
+            }
+
+            .readylog-section-title {
+              font-size: 15px !important;
+            }
+
+            .readylog-section-sub {
+              font-size: 12px !important;
+            }
           }
         `}
       </style>
 
-      <div style={container}>
-        <section style={{ ...neoPanel(c), padding: "18px", background: c.header }}>
-          <div style={topbar}>
-            <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-              <div style={logoBox(c)}>RL</div>
+      <div className="readylog-container" style={container}>
+        <section
+          className="readylog-panel"
+          style={{ ...neoPanel(c), padding: "18px", background: c.header }}
+        >
+          <div className="readylog-header-inner" style={topbar}>
+            <div
+              className="readylog-brand-row"
+              style={{ display: "flex", alignItems: "center", gap: "14px" }}
+            >
+              <div className="readylog-logo" style={logoBox(c)}>
+                RL
+              </div>
 
               <div>
-                <div style={title}>ReadyLog</div>
-                <div style={{ color: c.sub, fontSize: "13px", fontWeight: 800 }}>
+                <div className="readylog-title" style={title}>
+                  ReadyLog
+                </div>
+
+                <div
+                  className="readylog-subtitle"
+                  style={{ color: c.sub, fontSize: "13px", fontWeight: 800 }}
+                >
                   Internal workspace cabang, table operasional, dan laporan
                   ReadyRoom.
                 </div>
               </div>
             </div>
 
-            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+            <div className="readylog-actions" style={actionsWrap}>
               <button
                 onClick={() => setShowBranchModal(true)}
                 style={neoButton(c, "#FFB703")}
@@ -817,13 +1030,19 @@ export default function BookingBoard() {
           </div>
         </section>
 
-        <section style={{ ...neoPanel(c), padding: "16px", marginTop: "16px" }}>
-          <div style={sectionTitle}>Folder Cabang</div>
-          <div style={sectionSub}>
+        <section
+          className="readylog-panel"
+          style={{ ...neoPanel(c), padding: "16px", marginTop: "16px" }}
+        >
+          <div className="readylog-section-title" style={sectionTitle}>
+            Folder Cabang
+          </div>
+
+          <div className="readylog-section-sub" style={sectionSub}>
             Pilih cabang, lalu pilih table yang mau diisi.
           </div>
 
-          <div style={chipWrap}>
+          <div className="readylog-chip-row" style={chipWrap}>
             {workspace.branches.map((branch) => (
               <button
                 key={branch.id}
@@ -841,6 +1060,7 @@ export default function BookingBoard() {
         </section>
 
         <section
+          className="readylog-panel"
           style={{
             ...neoPanel(c),
             padding: "16px",
@@ -848,15 +1068,16 @@ export default function BookingBoard() {
             background: c.panel2,
           }}
         >
-          <div style={sectionTitle}>
+          <div className="readylog-section-title" style={sectionTitle}>
             Table {selectedBranchData ? selectedBranchData.name : ""}
           </div>
-          <div style={sectionSub}>
+
+          <div className="readylog-section-sub" style={sectionSub}>
             Isi table ini bisa dibuat untuk booking manual, operasional, PLN,
             maintenance, dan kas kecil.
           </div>
 
-          <div style={chipWrap}>
+          <div className="readylog-chip-row" style={chipWrap}>
             {branchTables.length === 0 ? (
               <div style={{ fontWeight: 900, color: c.sub }}>
                 Belum ada table di cabang ini.
@@ -875,7 +1096,10 @@ export default function BookingBoard() {
           </div>
         </section>
 
-        <section style={{ ...neoPanel(c), padding: "14px", marginTop: "16px" }}>
+        <section
+          className="readylog-panel"
+          style={{ ...neoPanel(c), padding: "14px", marginTop: "16px" }}
+        >
           <div className="readylog-filter" style={filterGrid}>
             <input
               value={search}
@@ -893,12 +1117,15 @@ export default function BookingBoard() {
             </button>
 
             <button onClick={handlePrintSelected} style={neoButton(c, "#06D6A0")}>
-              Cetak PDF Detail
+              Cetak PDF
             </button>
           </div>
         </section>
 
-        <section style={{ ...neoPanel(c), marginTop: "16px", overflow: "hidden" }}>
+        <section
+          className="readylog-panel readylog-desktop-table"
+          style={{ ...neoPanel(c), marginTop: "16px", overflow: "hidden" }}
+        >
           <div style={{ overflowX: "auto", width: "100%" }}>
             <table
               style={{
@@ -1002,7 +1229,88 @@ export default function BookingBoard() {
           </div>
         </section>
 
-        <section style={summaryGrid}>
+        <section className="readylog-mobile-list">
+          {visibleRows.length === 0 ? (
+            <div className="readylog-mobile-card">
+              <div style={{ fontWeight: 950, color: c.sub }}>
+                Belum ada data. Klik tombol + Data untuk mulai input.
+              </div>
+            </div>
+          ) : (
+            visibleRows.map((row, index) => {
+              const isSelected = selectedRows.includes(row.id);
+
+              return (
+                <div
+                  key={row.id}
+                  className="readylog-mobile-card"
+                  style={{
+                    background: isSelected ? c.selected : c.panel,
+                  }}
+                >
+                  <div className="readylog-mobile-card-head">
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                      <span className="readylog-mobile-number">{index + 1}</span>
+
+                      <div>
+                        <div style={{ fontSize: "13px", fontWeight: 950 }}>
+                          {activeTable?.name || "Table"}
+                        </div>
+                        <div style={{ fontSize: "11px", fontWeight: 800, color: c.sub }}>
+                          {selectedBranchData?.name || "-"}
+                        </div>
+                      </div>
+                    </div>
+
+                    <label
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        fontSize: "12px",
+                        fontWeight: 950,
+                      }}
+                    >
+                      Pilih
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleRow(row.id)}
+                        style={{
+                          width: "18px",
+                          height: "18px",
+                          cursor: "pointer",
+                        }}
+                      />
+                    </label>
+                  </div>
+
+                  <div className="readylog-mobile-fields">
+                    {activeTemplate.fields.map((field) => (
+                      <div key={field.key}>
+                        <span className="readylog-mobile-field-label">
+                          {field.label}
+                        </span>
+
+                        <EditableCell
+                          c={c}
+                          field={field}
+                          value={row[field.key]}
+                          mobile
+                          onChange={(value) =>
+                            handleCellChange(row.id, field.key, value)
+                          }
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </section>
+
+        <section className="readylog-summary" style={summaryGrid}>
           <SummaryCard c={c} label="Total Data" value={visibleRows.length} />
           <SummaryCard c={c} label="Cash" value={totalCash} />
           <SummaryCard c={c} label="QRIS" value={totalQris} />
@@ -1140,7 +1448,16 @@ export default function BookingBoard() {
   );
 }
 
-function EditableCell({ c, field, value, onChange }) {
+function EditableCell({ c, field, value, onChange, mobile = false }) {
+  const responsiveInputStyle = mobile
+    ? {
+        width: "100%",
+        minWidth: 0,
+      }
+    : {
+        minWidth: `${getFieldWidth(field) - 24}px`,
+      };
+
   if (field.type === "select") {
     return (
       <select
@@ -1148,7 +1465,7 @@ function EditableCell({ c, field, value, onChange }) {
         onChange={(event) => onChange(event.target.value)}
         style={{
           ...cellInput(c),
-          minWidth: `${getFieldWidth(field) - 24}px`,
+          ...responsiveInputStyle,
         }}
       >
         {(field.options || []).map((option) => (
@@ -1166,11 +1483,11 @@ function EditableCell({ c, field, value, onChange }) {
         value={value || ""}
         onChange={(event) => onChange(event.target.value)}
         placeholder="Tulis keterangan..."
-        rows={2}
+        rows={mobile ? 3 : 2}
         style={{
           ...cellInput(c),
-          minWidth: `${getFieldWidth(field) - 24}px`,
-          minHeight: "46px",
+          ...responsiveInputStyle,
+          minHeight: mobile ? "76px" : "46px",
           resize: "vertical",
           whiteSpace: "normal",
           lineHeight: 1.35,
@@ -1187,7 +1504,7 @@ function EditableCell({ c, field, value, onChange }) {
       placeholder={field.type === "money" ? "0" : ""}
       style={{
         ...cellInput(c),
-        minWidth: `${getFieldWidth(field) - 24}px`,
+        ...responsiveInputStyle,
       }}
     />
   );
@@ -1262,6 +1579,7 @@ function Modal({ c, title, children, onClose }) {
       }}
     >
       <div
+        className="readylog-modal-box"
         onClick={(event) => event.stopPropagation()}
         style={{
           ...neoPanel(c),
@@ -1303,6 +1621,7 @@ function ModalActions({ c, submitText, onCancel }) {
         justifyContent: "flex-end",
         gap: "10px",
         marginTop: "18px",
+        flexWrap: "wrap",
       }}
     >
       <button type="button" onClick={onCancel} style={neoButton(c, c.muted)}>
@@ -1392,6 +1711,12 @@ const topbar = {
   alignItems: "center",
   justifyContent: "space-between",
   gap: "14px",
+  flexWrap: "wrap",
+};
+
+const actionsWrap = {
+  display: "flex",
+  gap: "10px",
   flexWrap: "wrap",
 };
 
